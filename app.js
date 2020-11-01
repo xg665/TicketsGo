@@ -1,9 +1,9 @@
-require('./db');
+//require('./db');
 
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-
+const passport = require('passport')
 const app = express();
 
 // enable sessions
@@ -15,18 +15,28 @@ const sessionOptions = {
 };
 app.use(session(sessionOptions));
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-
-// body parser setup
+// // body parser setup
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// serve static files
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.get('/', (req, res) => {
-  res.render('index');
+  
 });
 
-app.listen(3000);
+app.get('/category',(req,res)=>{
+
+
+});
+app.get('/nearby',(req,res)=>{
+
+
+});
+app.get('/favorite',(req,res)=>{
+
+
+});
+app.get('/login', passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login' });
+
+
+
+app.listen(5000);
