@@ -4,8 +4,6 @@ The content below is an example project proposal / requirements document. Replac
 
 ## Overview
 
-(___TODO__: a brief one or two paragraph, high-level description of your project_)
-
 TicketAround is a ticket recommendation site that recommends tickets/events within 25mi,50mi and 75mi radius of user's Geolocations(More sophisticated recommedation may be implemented if time permits). 
 
 It is a webapp that allows users to browse nearby events on a google map and browse favorited events once logged in. For every event selected by users, they can click on the event and be redirected to ticketmaster.com to make purchases.  
@@ -18,8 +16,6 @@ The application will store Users, Items, Favorites and
 * items have item_id, name, address, category, image_url,url
 * users have user_id,username,password hash, email
 * favorites have user_id(as reference), multiple items(by reference) 
-
-(___TODO__: sample documents_)
 
 Item:
 ```javascript
@@ -56,11 +52,7 @@ Favorite:
 
 ## [Link to Commented First Draft Schema](db.js) 
 
-(___TODO__: create a first draft of your Schemas in db.js and link to it_)
-
 ## Wireframes
-
-(___TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc._)
 
 /login - page for login or sign up 
 ![login](documentation/login.png)
@@ -117,7 +109,5 @@ Favorite:
 
 ## Annotations / References Used
 
-(___TODO__: list any tutorials/references/etc. that you've based your code off of_)
-
-1. [passport.js authentication docs](http://passportjs.org/docs) - ()
-2. [tutorial on react.js](https://vuejs.org/v2/guide/) - ()
+1. [passport.js authentication docs](http://passportjs.org/docs) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/xg665-final-project/blob/d936194e56b9e1d96d755a20740402602a1be348/app.js#L37)
+2. [tutorial on react.js](https://vuejs.org/v2/guide/) - (https://github.com/nyu-csci-ua-0480-034-fall-2020/xg665-final-project/blob/d936194e56b9e1d96d755a20740402602a1be348/client/src/App.js#L4)
