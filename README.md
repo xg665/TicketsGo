@@ -74,8 +74,6 @@ Favorite:
 ![favorites](documentation/favorites.png)
 ## Site map
 
-(___TODO__: draw out a site map that shows how pages are related to each other_)
-
 ![sitemap](documentation/sitemap.png)
 
 ## User Stories or Use Cases
