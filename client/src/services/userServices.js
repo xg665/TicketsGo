@@ -9,8 +9,6 @@ export async function getAllFavs() {
 
 export async function createFav(data) {
 
-	//data = new FormData(data);
-
     const response = await fetch(`/favorite`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
