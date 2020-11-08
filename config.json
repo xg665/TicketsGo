@@ -1,2 +1,1 @@
-//TO BE MODIFIED:
-//{"dbconf":"mongodb://myUser:root@localhost/hw05"}
+{"dbconf":"mongodb://localhost/finalprojectconfig"}
