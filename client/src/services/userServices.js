@@ -27,6 +27,16 @@ export async function getEventsByCategory(category,geohash) {
     return await response.json();
 }
 
+export async function getEventsByPref(pref){
+
+    const response = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?classificationId=${pref}&apikey=Gk4C8GqAKAmgIgioLBtbfttyF9h7Z5HC`,{
+        method: 'GET'
+    });
+
+    return await response.json();
+
+}
+
 export async function getPersonal() {
 
     const response = await fetch(`/personal`,{
@@ -36,3 +46,12 @@ export async function getPersonal() {
     return await response.json();
 }
 
+
+export async function getFavs(){
+
+    const response = await fetch(`/getfavs`,{
+        method: 'GET'
+    });
+
+    return await response.json();
+}

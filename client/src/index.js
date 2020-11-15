@@ -6,6 +6,7 @@ import App from './App';
 import Home from './Home';
 import Event from './Event';
 import MyNavBar from './MyNavBar';
+import Favorites from './Favorites';
 import reportWebVitals from './reportWebVitals';
 import {Link, Route, Switch, useHistory, withRouter, BrowserRouter } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
@@ -17,6 +18,7 @@ ReactDOM.render(
   		<Route path="/" exact component={ App }/>
   		<Route path="/event/:category" exact component={ Event }/>
   		<Route path="/Home" exact component={ Home }/>
+  		<Route path="/favorites" exact component= { Favorites }/>
   	</Switch>
   </BrowserRouter>,
   document.getElementById('root')

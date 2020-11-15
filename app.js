@@ -14,7 +14,7 @@ const app = express();
 
 
 app.use(cors());
-app.use(express.static(path.join(__dirname, 'client/public')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(bodyParser.json());
 
 
@@ -102,7 +102,7 @@ passport.use(new LocalStrategy({usernameField:'email'}, (email, password, done) 
 
 app.get('/', (req, res) => {
 	
-	res.sendFile(path.join(__dirname, 'client/public','index.html'))
+	res.sendFile(path.join(__dirname, 'client/build','index.html'))
   
 });
 
@@ -113,7 +113,7 @@ app.post('/register',passport.authenticate('local'),(req,res)=>{
 
 });
 
-app.post('/addPreferences', passport.authenticate('local'), (req,res)=>{
+app.post('/addPreferences', (req,res)=>{
 
 
 
@@ -121,11 +121,35 @@ app.post('/addPreferences', passport.authenticate('local'), (req,res)=>{
 
 });
 
+app.get('/getFavs', (req,res)=>{
+
+
+	if(req.user===undefined){
+
+		res.sendStatus(401);
+	}
+	else{
+		Favorite.findOne({user: req.user._id})
+			.populate('items')
+	  		.exec(function (err, favorites) {
+	    		
+	    		if (!err){
+					res.send(favorites.items);
+	    		}
+	    			
+	    			
+	  		});
+  	}
+
+})
+
+
+
 app.post('/addfav', (req,res)=>{
 
 	if(!req.user){
 
-		console.log('no')
+		res.sendStatus(401);
 
 	}
 	else{

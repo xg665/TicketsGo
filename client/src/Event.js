@@ -1,7 +1,7 @@
 import React from 'react';
 import { getAllFavs, createFav, getEventsByCategory} from './services/userServices.js';
 import { withRouter,Link, Route, Switch, useHistory } from "react-router-dom";
-import { Nav, Navbar, Button, Card} from 'react-bootstrap';
+import { Nav, Navbar, Button, Card, Alert} from 'react-bootstrap';
 import './Event.css';
 import geohash from 'ngeohash';
 
@@ -13,12 +13,30 @@ class Event extends React.Component{
 		this.state = {
 			category:props.match.params.category,
 			events:[],
-			selected:[]
+			selected:[],
+			show:false
 		};
 		// console.log(props.match.params.category);
 	}
 
+	componentDidUpdate(prevProps) {
+		//console.log(this.prevProps)
+    	if (this.state.category !== this.props.match.params.category) {
+      		this.setState({ category: this.props.match.params.category });
+      		// console.log(this.state.category);
+      		getEventsByCategory(this.props.match.params.category,this.state.geohash)
+  				.then((res)=>{
+  					console.log(res._embedded.events);
+  					this.setState({events: [...res._embedded.events]})
+  					console.log(this.state.events.length)
+  				});
+    	}
+
+ 	}
+
 	componentDidMount() {
+
+
 
 		navigator.geolocation.getCurrentPosition((pos)=>{
 
@@ -64,16 +82,35 @@ class Event extends React.Component{
         		
         		console.log(response)
 
+        		if(response.status==401){
+        			this.handleShow();
+        		}
+
         	})
 
 
   	}
 
+  	handleClose = () => this.setState({show:false});
+ 	
+ 	handleShow = () => this.setState({show:true});
+
 
 	render() {
 		return (
 		<div className="Event">
-		
+		<Alert variant="danger" show={this.state.show} onClose={() => this.handleClose(false)} dismissible>
+        	<Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+       			<p>
+         			You must login/register to add favorites
+       			</p>
+       			<hr />
+        		<div className="d-flex justify-content-end">
+          			<Button onClick={() => this.handleClose(false)} variant="danger">
+            			Close
+          			</Button>
+        		</div>
+      	</Alert>
       	
       	{this.state.events.map((eve,idx)=>(
       		

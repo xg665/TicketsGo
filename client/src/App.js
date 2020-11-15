@@ -1,10 +1,10 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { getAllFavs, createFav } from './services/userServices.js';
+import { getEventsByPref, createFav } from './services/userServices.js';
 import Modal from './MyCustomeModal.js'
 import { withRouter,Link, Route, Switch, useHistory } from "react-router-dom";
-import { Nav, Navbar } from 'react-bootstrap';
+import { Nav, Navbar, Form, Button, Card} from 'react-bootstrap';
 
 class App extends React.Component{
   
@@ -21,39 +21,47 @@ class App extends React.Component{
       image_url:'',
       url:''
       },
-      favorites:[],
+      pref:'KZFzniwnSyZfZ7v7nJ',
+      events:[],
       name:''
     };
   }
 
   handleChange = (event) => {
+    console.log(event.target.value)
+    this.setState({
 
-    this.setState(prevState=>({                                 //src:https://medium.com/bb-tutorials-and-thoughts/how-to-develop-and-build-react-app-with-nodejs-bc06fa1c18f3
+      pref: event.target.value
 
-      data:{
-        ...prevState.data,
-        [event.target.name]: event.target.value                 //set state of changed values in the form
-      }
-    })
 
-    );          
+    });     
+    getEventsByPref(event.target.value)
+      .then((res)=>{
+            console.log(this.state.pref);
+            this.setState({events: [...res._embedded.events]})
+            console.log(this.state.events)
+          });     
 
   }
 
-  handleSubmit= (event)=>{                                        //src: https://pusher.com/tutorials/consume-restful-api-react
+  componentDidMount() {
 
-    event.preventDefault();
-    const requestOp = {
-        method: 'POST',                                           //http post request when submitting form
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(this.state.data)
-    };
+    getEventsByPref(this.state.pref)
+      .then((res)=>{
+            console.log(this.state.pref);
+            this.setState({events: [...res._embedded.events]})
+            console.log(this.state.events)
+          });
 
-    fetch('/favorite', requestOp)
-        .then(response => {response.json()})
-        .then(data => {this.props.history.push('/Home');});       //routing to /home after response
+
+  }
+
+  // handleSubmit= (event)=>{                                        //src: https://pusher.com/tutorials/consume-restful-api-react
+
+  //   event.preventDefault();
+      
     
-  }
+  // }
 
 
 
@@ -61,16 +69,29 @@ class App extends React.Component{
     return (
       <div className="App">
 
-      <form onSubmit={this.handleSubmit}>
-        <label><span>Event Id:</span><input type="text" value={this.state.data.event_id} name="event_id" onChange={this.handleChange}/></label>
-        <label><span>Even Name:</span><input type="text" value={this.state.data.event_name} name="event_name" onChange={this.handleChange}/></label>
-        <label><span>Category:</span><input type="text" value={this.state.data.category} name="category" onChange={this.handleChange}/></label>
-        <label><span>Address:</span><input type="text" value={this.state.data.address} name="address" onChange={this.handleChange}/></label>
-        <label><span>Image Url:</span><input type="text" value={this.state.data.image_url} name="image_url" onChange={this.handleChange}/></label>
-        <label><span>Event Url:</span><input type="text" value={this.state.data.url} name="url" onChange={this.handleChange}/></label>
-        <input type="submit" value="Submit"/>
-      </form>
-
+      <Form>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Select Your Preference</Form.Label>
+          <Form.Control as="select" onChange={this.handleChange} value={this.state.pref}>
+            <option value="KZFzniwnSyZfZ7v7nJ">Music</option>
+            <option value="KZFzniwnSyZfZ7v7nE">Sports</option>
+            <option value="KZFzniwnSyZfZ7v7na">Theatre</option>
+          </Form.Control>
+        </Form.Group>
+      </Form>
+      {this.state.events.map((eve,idx)=>(
+          
+            <Card key={idx} style={{ width: '40rem' }}>
+          <Card.Img variant="top" src={eve.images[eve.images.length-1].url} />
+          <Card.Body>
+            <Card.Title>{eve.name}</Card.Title>
+        
+            <Button variant="primary" href={eve.url}>Learn More</Button>
+            
+          </Card.Body>
+      </Card>
+    
+      ))}
       </div>
     );
   }

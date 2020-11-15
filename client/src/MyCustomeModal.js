@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button, Form} from 'react-bootstrap';
+import Popup from 'react-popup';
 
 class MyCustomeModal extends React.Component {
 
@@ -14,7 +15,9 @@ class MyCustomeModal extends React.Component {
 
 			email:'',
 
-			password: ''
+			password: '',
+
+			wrong: false
 
 		};
 
@@ -43,18 +46,29 @@ class MyCustomeModal extends React.Component {
 
     	fetch('/register', requestOp)
         	.then((response) => {
-        		this.props.setUser(this.state.email);
-        		this.handleClose();
 
+        		if(response.status==401){
+        			this.setState({wrong: true});
+
+        		}
+        		else{
+        			this.props.setUser(this.state.email);
+        			this.handleClose();
+        			
+        		}
+        		
+				
         	})
 
 
  	}
 
+
 	render(){
 
 		return (
 		<div className="MyCustomeModal">
+			
 			<Button variant="primary" onClick={this.handleShow}>
         		Register
       		</Button>
@@ -73,6 +87,9 @@ class MyCustomeModal extends React.Component {
 				  <Form.Group controlId="formBasicPassword">
 				    <Form.Label>Password</Form.Label>
 				    <Form.Control type="password" value={this.state.password} onChange={this.handleChange} placeholder="Password" />
+				    <Form.Text className="text-muted" style={{display: this.state.wrong?'block':'none'}}>
+      					Wrong Password
+    				</Form.Text>
 				  </Form.Group>
 				  <Button variant="primary" type="submit">
 				    Submit

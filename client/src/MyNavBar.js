@@ -2,7 +2,7 @@ import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 import Modal from './MyCustomeModal.js';
 import { getPersonal } from './services/userServices.js';
-
+import { withRouter,Link, Route, Switch, useHistory } from "react-router-dom";
 
 class MyNavBar extends React.Component{
 
@@ -35,6 +35,12 @@ class MyNavBar extends React.Component{
 
 
   	}
+
+  	route=(path)=>{
+
+  		this.props.history.push(path)
+
+  	}
   	render(){
 
   		return (
@@ -42,9 +48,10 @@ class MyNavBar extends React.Component{
   			<Navbar bg="light" expand="lg"> 
         		<Navbar.Brand href="/">Ticket Around</Navbar.Brand>
         		<Nav className="mr-auto">
-          			<Nav.Link href="/event/concert">Concert</Nav.Link>
-          			<Nav.Link href="/event/sport">Sport</Nav.Link>
-          			<Nav.Link href="/event/theatre">Theatre</Nav.Link>
+          			<Nav.Link onClick={this.route.bind(this,'/event/concert')}>Concert</Nav.Link>
+          			<Nav.Link onClick={this.route.bind(this,'/event/sport')}>Sport</Nav.Link>
+          			<Nav.Link onClick={this.route.bind(this,'/event/theatre')}>Theatre</Nav.Link>
+          			<Nav.Link onClick={this.route.bind(this,'/favorites')}>Your Favorites</Nav.Link>
           			<Modal setUser ={this.modalCallback} />
         		</Nav>
         		<Navbar bg="light">
@@ -58,4 +65,4 @@ class MyNavBar extends React.Component{
 
 }
 
-export default MyNavBar;
+export default withRouter(MyNavBar);
