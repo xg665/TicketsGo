@@ -9,6 +9,8 @@ const User = new mongoose.Schema({
   //username provided by passport
   //password hash provided by passport
   email:{type: String, required: true, unique:true},
+  password: {type: String, required:true},
+  preferences: [{type:String}],
   favorites: {type: mongoose.Schema.Types.ObjectId, ref: 'Favorite'}
 });
 
@@ -19,6 +21,8 @@ const Item = new mongoose.Schema({
   item_id: {type: String, required: true, unique:true},
   name: {type: String, required: true},
   address: {type: String,required: true},
+  lat: {type:String, required:true},
+  lon: {type:String,required:true},
   category:{type: String,required:true},
   image_url:{type:String,required:true},
   url:{type: String, required:true}
@@ -31,6 +35,7 @@ const Favorite = new mongoose.Schema({
   user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
   items: [{type: mongoose.Schema.Types.ObjectId, ref:'Item'}]
 });
+
 
 // TODO: add remainder of setup for slugs, connection, registering models, etc. below
 

@@ -2,7 +2,9 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { getAllFavs, createFav } from './services/userServices.js';
+import Modal from './MyCustomeModal.js'
 import { withRouter,Link, Route, Switch, useHistory } from "react-router-dom";
+import { Nav, Navbar } from 'react-bootstrap';
 
 class App extends React.Component{
   
@@ -19,7 +21,8 @@ class App extends React.Component{
       image_url:'',
       url:''
       },
-      favorites:[]
+      favorites:[],
+      name:''
     };
   }
 
@@ -53,13 +56,14 @@ class App extends React.Component{
   }
 
 
+
   render() {
     return (
       <div className="App">
-                                                                  
+
       <form onSubmit={this.handleSubmit}>
         <label><span>Event Id:</span><input type="text" value={this.state.data.event_id} name="event_id" onChange={this.handleChange}/></label>
-        <label><span>Event Name:</span><input type="text" value={this.state.data.event_name} name="event_name" onChange={this.handleChange}/></label>
+        <label><span>Even Name:</span><input type="text" value={this.state.data.event_name} name="event_name" onChange={this.handleChange}/></label>
         <label><span>Category:</span><input type="text" value={this.state.data.category} name="category" onChange={this.handleChange}/></label>
         <label><span>Address:</span><input type="text" value={this.state.data.address} name="address" onChange={this.handleChange}/></label>
         <label><span>Image Url:</span><input type="text" value={this.state.data.image_url} name="image_url" onChange={this.handleChange}/></label>
