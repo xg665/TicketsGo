@@ -20,7 +20,7 @@ export async function createFav(data) {
 
 export async function getEventsByCategory(category,geohash) {
 
-    const response = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?classificationName=${category}&geoPoint=${geohash}&sort=date%2Casc&apikey=Gk4C8GqAKAmgIgioLBtbfttyF9h7Z5HC`,{
+    const response = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?classificationName=${category}&apikey=Gk4C8GqAKAmgIgioLBtbfttyF9h7Z5HC`,{
         method: 'GET'
     });
 

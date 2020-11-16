@@ -11,7 +11,7 @@ class Event extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			category:props.match.params.category,
+			category:'',//props.match.params.category,
 			events:[],
 			selected:[],
 			show:false
@@ -37,13 +37,13 @@ class Event extends React.Component{
 	componentDidMount() {
 
 
+		
+		//navigator.geolocation.getCurrentPosition((pos)=>{
 
-		navigator.geolocation.getCurrentPosition((pos)=>{
+			//const crd = pos.coords;
 
-			const crd = pos.coords;
-
-			this.setState({geohash:geohash.encode(crd.latitude, crd.longitude)})
-  			console.log(this.state.geohash)
+			//this.setState({geohash:geohash.encode(crd.latitude, crd.longitude)})
+  			//console.log(this.state.geohash)
   			getEventsByCategory(this.state.category,this.state.geohash)
   				.then((res)=>{
   					console.log(res._embedded.events);
@@ -51,7 +51,7 @@ class Event extends React.Component{
   					console.log(this.state.events.length)
   				});
 
-		});
+		//});
 
   	}
 
