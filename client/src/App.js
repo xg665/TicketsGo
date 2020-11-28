@@ -1,10 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import logo from './events-page-background.jpg';
 import { getEventsByPref, createFav } from './services/userServices.js';
 import Modal from './MyCustomeModal.js'
 import { withRouter,Link, Route, Switch, useHistory } from "react-router-dom";
-import { Nav, Navbar, Form, Button, Card} from 'react-bootstrap';
+import { Nav, Navbar, Form, Button, Card, ListGroup,CardGroup} from 'react-bootstrap';
+import 'font-awesome/css/font-awesome.min.css';
 
 class App extends React.Component{
   
@@ -56,19 +57,24 @@ class App extends React.Component{
 
   }
 
-  // handleSubmit= (event)=>{                                        //src: https://pusher.com/tutorials/consume-restful-api-react
+  route=(path)=>{
 
-  //   event.preventDefault();
-      
-    
-  // }
+      this.props.history.push(path)
 
+  }
 
 
   render() {
     return (
       <div className="App">
+      <div className="Carousel">
+        <p style={{fontFamily:'fantasy',fontSize:'150px',color:'#101b66',position:'absolute',left:'15%'}}>
+          Ticket 
+          <br/>Around
+        </p>
 
+        <Button variant="dark" size="lg" style={{position:'absolute',top:'65%',left:'70%'}} onClick={this.route.bind(this,'/public/nearby')}>Explore Nearby</Button>
+      </div>
       <Form>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Select Your Preference</Form.Label>
@@ -79,10 +85,13 @@ class App extends React.Component{
           </Form.Control>
         </Form.Group>
       </Form>
+
+     
+      <CardGroup className="cardContainer">
       {this.state.events.map((eve,idx)=>(
           
-            <Card key={idx} style={{ width: '40rem' }}>
-          <Card.Img variant="top" src={eve.images[eve.images.length-1].url} />
+            <Card key={idx} style={{padding:'10px'}}>
+          <Card.Img variant="top" src={eve.images[eve.images.length-1].url} style={{height:'250px'}} />
           <Card.Body>
             <Card.Title>{eve.name}</Card.Title>
         
@@ -92,6 +101,8 @@ class App extends React.Component{
       </Card>
     
       ))}
+      </CardGroup>
+
       </div>
     );
   }
@@ -99,4 +110,4 @@ class App extends React.Component{
 }
 
 const AppWithRouter = withRouter(App);
-export default App;
+export default AppWithRouter;

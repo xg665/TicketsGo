@@ -1,5 +1,24 @@
 .App {
   text-align: center;
+  padding-top:100px;
+}
+
+.Carousel {
+
+  width: 100%;
+
+  height: 650px;
+
+  background-image: url(./events-page-background.jpg);
+
+}
+
+.cardContainer {
+  display: grid;
+
+  grid-template-columns: 33% 33% 33%;
+
+  padding: 20px;
 }
 
 .App-logo {

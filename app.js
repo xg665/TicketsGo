@@ -100,7 +100,7 @@ passport.use(new LocalStrategy({usernameField:'email'}, (email, password, done) 
 
 }));
 
-app.get('/', (req, res) => {
+app.get('/public/*', (req, res) => {
 	
 	res.sendFile(path.join(__dirname, 'client/build','index.html'))
   
@@ -108,18 +108,58 @@ app.get('/', (req, res) => {
 
 app.post('/register',passport.authenticate('local'),(req,res)=>{
 
-	// console.log(req.flash());
+	
 	res.send(req.user);
+
+});
+
+app.post('/login',passport.authenticate('local'),(req,res)=>{
+
+	res.send(req.user);
+	//res.redirect('/');
+
+});
+
+app.get('/logout',(req,res)=>{
+
+	req.logout();
+
+	res.sendStatus(200);
 
 });
 
 app.post('/addPreferences', (req,res)=>{
 
 
+	const user = req.user;
 
+	const pref = req.body.preferences;
+
+	User.findOneAndUpdate({email:user.email}, {$push: { "preferences": pref }},{useFindAndModify:false},(err,user)=>{
+
+		if(!err){
+			
+			res.sendStatus(200);
+		}
+
+	})
 
 
 });
+
+app.get('/getPrefs',(req,res)=>{
+
+	if(req.user===undefined){
+
+		res.sendStatus(401);
+	}
+	else{
+		
+		res.json(req.user.preferences);
+	}
+	
+
+})
 
 app.get('/getFavs', (req,res)=>{
 
@@ -129,6 +169,7 @@ app.get('/getFavs', (req,res)=>{
 		res.sendStatus(401);
 	}
 	else{
+		
 		Favorite.findOne({user: req.user._id})
 			.populate('items')
 	  		.exec(function (err, favorites) {
@@ -155,7 +196,7 @@ app.post('/addfav', (req,res)=>{
 	else{
 
 		const user = req.user;
-
+		
 		Item.findOne({item_id:req.body.item_id+""},(err,it)=>{
 
 			if(!err){

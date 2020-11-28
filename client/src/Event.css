@@ -1,3 +1,43 @@
 #add_button {
 	float: right;
 }
+#map {
+
+	position: fixed !important;
+
+}
+.Event {
+
+	display: flex;
+
+	flex-direction: row;
+
+	position: absolute;
+
+	width: 100%;
+
+}
+
+.event_wrapper {
+
+	display: flex;
+
+	flex-direction: column;
+
+	width: 50%;
+
+	position: relative;
+
+	margin-top: 100px;
+
+}
+
+.map_wrapper {
+
+	width: 50%;
+
+	position: relative;
+
+	margin-top: 100px;
+
+}

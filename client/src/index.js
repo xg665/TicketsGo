@@ -7,6 +7,7 @@ import Home from './Home';
 import Event from './Event';
 import MyNavBar from './MyNavBar';
 import Favorites from './Favorites';
+import Nearby from './Nearby';
 import reportWebVitals from './reportWebVitals';
 import {Link, Route, Switch, useHistory, withRouter, BrowserRouter } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
@@ -15,10 +16,10 @@ ReactDOM.render(
   <BrowserRouter>
   <MyNavBar/>
   	<Switch>
-  		<Route path="/" exact component={ App }/>
-  		<Route path="/event/:category" exact component={ Event }/>
-  		<Route path="/Home" exact component={ Home }/>
-  		<Route path="/favorites" exact component= { Favorites }/>
+  		<Route path="/public/home" exact component={ App }/>
+  		<Route path="/public/event/:category" exact component={ Event }/>
+  		<Route path="/public/favorites" exact component= { Favorites }/>
+  		<Route path="/public/nearby" exact component={ Nearby }/>
   	</Switch>
   </BrowserRouter>,
   document.getElementById('root')
