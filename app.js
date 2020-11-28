@@ -1,5 +1,6 @@
 require('./db');
 
+const bcrypt = require('bcryptjs');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -44,9 +45,15 @@ passport.use(new LocalStrategy({usernameField:'email'}, (email, password, done) 
 
 	User.findOne({email:email},(err, user)=>{
 		
+		const salt = bcrypt.genSaltSync(10);
+		
+		const hash = bcrypt.hashSync(password, salt);
+		
 		if(!user){
+
 			
-			const newUser = new User({email:email, password:password});
+
+			const newUser = new User({email:email, password:hash});
 
 			newUser.save(function(err,user){
 
@@ -82,8 +89,10 @@ passport.use(new LocalStrategy({usernameField:'email'}, (email, password, done) 
 			})
 		}
 		else{
+
+			//bcrypt.compareSync(user.password, hash);
 			
-			if(user.password===password){
+			if(bcrypt.compareSync(password, hash)){//user.password===password
 
 				return done(null,user);
 			}
