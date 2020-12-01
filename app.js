@@ -92,7 +92,7 @@ passport.use(new LocalStrategy({usernameField:'email'}, (email, password, done) 
 
 			//bcrypt.compareSync(user.password, hash);
 			
-			if(bcrypt.compareSync(password, hash)){//user.password===password
+			if(bcrypt.compareSync(user.password, hash)){//user.password===password
 
 				return done(null,user);
 			}
